@@ -1,68 +1,89 @@
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
+import 'package:my_camp_sites/model/camp_site.dart';
+import 'package:my_camp_sites/page/view.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final dir = await getApplicationDocumentsDirectory();
+  final isar = await Isar.open(
+    [CampSiteSchema],
+    directory: dir.path,
+  );
+
+  runApp(MyApp(isar: isar));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.isar});
+
+  final Isar isar;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'MyCampSites',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: AddPage(isar: isar),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class AddPage extends StatefulWidget {
+  const AddPage({Key? key, required this.isar}) : super(key: key);
 
-  final String title;
+  final Isar isar;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<AddPage> createState() => _AddPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _AddPageState extends State<AddPage> {
+  final nameController = TextEditingController();
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void dispose() {
+    nameController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: const Text('キャンプ場追加'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            TextField(
+              controller: nameController,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            ElevatedButton(
+                onPressed: () async {
+                  final campSite = CampSite()..name = nameController.text;
+                  nameController.clear();
+                  await widget.isar.writeTxn(() async {
+                    await widget.isar.campSites.put(campSite);
+                  });
+                },
+                child: const Text('追加')),
+            const SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ViewPage(isar: widget.isar),
+                    ),
+                  );
+                },
+                child: const Text('一覧へ'))
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
