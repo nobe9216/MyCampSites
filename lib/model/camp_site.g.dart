@@ -17,10 +17,20 @@ const CampSiteSchema = CollectionSchema(
   name: r'CampSite',
   id: 4521682128850538997,
   properties: {
-    r'name': PropertySchema(
+    r'createdAt': PropertySchema(
       id: 0,
+      name: r'createdAt',
+      type: IsarType.dateTime,
+    ),
+    r'name': PropertySchema(
+      id: 1,
       name: r'name',
       type: IsarType.string,
+    ),
+    r'updatedAt': PropertySchema(
+      id: 2,
+      name: r'updatedAt',
+      type: IsarType.dateTime,
     )
   },
   estimateSize: _campSiteEstimateSize,
@@ -58,7 +68,9 @@ void _campSiteSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.name);
+  writer.writeDateTime(offsets[0], object.createdAt);
+  writer.writeString(offsets[1], object.name);
+  writer.writeDateTime(offsets[2], object.updatedAt);
 }
 
 CampSite _campSiteDeserialize(
@@ -67,9 +79,11 @@ CampSite _campSiteDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = CampSite();
+  final object = CampSite(
+    name: reader.readStringOrNull(offsets[1]),
+    updatedAt: reader.readDateTime(offsets[2]),
+  );
   object.id = id;
-  object.name = reader.readStringOrNull(offsets[0]);
   return object;
 }
 
@@ -81,7 +95,11 @@ P _campSiteDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
+      return (reader.readDateTime(offset)) as P;
+    case 1:
       return (reader.readStringOrNull(offset)) as P;
+    case 2:
+      return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -176,6 +194,59 @@ extension CampSiteQueryWhere on QueryBuilder<CampSite, CampSite, QWhereClause> {
 
 extension CampSiteQueryFilter
     on QueryBuilder<CampSite, CampSite, QFilterCondition> {
+  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> createdAtEqualTo(
+      DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'createdAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> createdAtGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> createdAtLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> createdAtBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'createdAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<CampSite, CampSite, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -373,6 +444,59 @@ extension CampSiteQueryFilter
       ));
     });
   }
+
+  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> updatedAtEqualTo(
+      DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'updatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> updatedAtGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'updatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> updatedAtLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'updatedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> updatedAtBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'updatedAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension CampSiteQueryObject
@@ -382,6 +506,18 @@ extension CampSiteQueryLinks
     on QueryBuilder<CampSite, CampSite, QFilterCondition> {}
 
 extension CampSiteQuerySortBy on QueryBuilder<CampSite, CampSite, QSortBy> {
+  QueryBuilder<CampSite, CampSite, QAfterSortBy> sortByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<CampSite, CampSite, QAfterSortBy> sortByCreatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<CampSite, CampSite, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -393,10 +529,34 @@ extension CampSiteQuerySortBy on QueryBuilder<CampSite, CampSite, QSortBy> {
       return query.addSortBy(r'name', Sort.desc);
     });
   }
+
+  QueryBuilder<CampSite, CampSite, QAfterSortBy> sortByUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updatedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<CampSite, CampSite, QAfterSortBy> sortByUpdatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updatedAt', Sort.desc);
+    });
+  }
 }
 
 extension CampSiteQuerySortThenBy
     on QueryBuilder<CampSite, CampSite, QSortThenBy> {
+  QueryBuilder<CampSite, CampSite, QAfterSortBy> thenByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<CampSite, CampSite, QAfterSortBy> thenByCreatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<CampSite, CampSite, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -420,14 +580,38 @@ extension CampSiteQuerySortThenBy
       return query.addSortBy(r'name', Sort.desc);
     });
   }
+
+  QueryBuilder<CampSite, CampSite, QAfterSortBy> thenByUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updatedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<CampSite, CampSite, QAfterSortBy> thenByUpdatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updatedAt', Sort.desc);
+    });
+  }
 }
 
 extension CampSiteQueryWhereDistinct
     on QueryBuilder<CampSite, CampSite, QDistinct> {
+  QueryBuilder<CampSite, CampSite, QDistinct> distinctByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'createdAt');
+    });
+  }
+
   QueryBuilder<CampSite, CampSite, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<CampSite, CampSite, QDistinct> distinctByUpdatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'updatedAt');
     });
   }
 }
@@ -440,9 +624,21 @@ extension CampSiteQueryProperty
     });
   }
 
+  QueryBuilder<CampSite, DateTime, QQueryOperations> createdAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'createdAt');
+    });
+  }
+
   QueryBuilder<CampSite, String?, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
+    });
+  }
+
+  QueryBuilder<CampSite, DateTime, QQueryOperations> updatedAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'updatedAt');
     });
   }
 }

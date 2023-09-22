@@ -7,23 +7,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:isar/isar.dart';
 
 import 'package:my_camp_sites/main.dart';
-import 'package:my_camp_sites/model/camp_site.dart';
-import 'package:path_provider/path_provider.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    final dir = await getApplicationDocumentsDirectory();
-    final isar = await Isar.open(
-      [CampSiteSchema],
-      directory: dir.path,
-    );
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(
-      isar: isar,
-    ));
+    await tester.pumpWidget(const MyApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

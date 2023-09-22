@@ -1,47 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
-import 'package:my_camp_sites/model/camp_site.dart';
-import 'package:my_camp_sites/page/view.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_camp_sites/page/camp_sites_page.dart';
+import 'package:my_camp_sites/providers/isar_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final dir = await getApplicationDocumentsDirectory();
-  final isar = await Isar.open(
-    [CampSiteSchema],
-    directory: dir.path,
-  );
 
-  runApp(MyApp(isar: isar));
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.isar});
-
-  final Isar isar;
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MyCampSites',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      home: AddPage(isar: isar),
+      home: const TopPage(),
     );
   }
 }
 
-class AddPage extends StatefulWidget {
-  const AddPage({Key? key, required this.isar}) : super(key: key);
-
-  final Isar isar;
+class TopPage extends StatefulHookConsumerWidget {
+  const TopPage({Key? key}) : super(key: key);
 
   @override
-  State<AddPage> createState() => _AddPageState();
+  ConsumerState<TopPage> createState() => _TopPageState();
 }
 
-class _AddPageState extends State<AddPage> {
+class _TopPageState extends ConsumerState<TopPage> {
   final nameController = TextEditingController();
 
   @override
@@ -52,39 +46,67 @@ class _AddPageState extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isar = ref.watch(isarProvider.future);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('キャンプ場追加'),
+        title: const Text('トップ'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              controller: nameController,
-            ),
             ElevatedButton(
                 onPressed: () async {
-                  final campSite = CampSite()..name = nameController.text;
-                  nameController.clear();
-                  await widget.isar.writeTxn(() async {
-                    await widget.isar.campSites.put(campSite);
-                  });
-                },
-                child: const Text('追加')),
-            const SizedBox(height: 20),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
+                  final navigator = Navigator.of(context);
+                  final _isar = await isar;
+                  navigator.push(
                     MaterialPageRoute(
-                      builder: (context) => ViewPage(isar: widget.isar),
+                      builder: (context) => CampSitesPage(isar: _isar),
                     ),
                   );
                 },
-                child: const Text('一覧へ'))
+                child: const Text('キャンプ場一覧'))
           ],
         ),
       ),
+    );
+  }
+}
+
+class AddCampSiteDialog extends HookConsumerWidget {
+  const AddCampSiteDialog({
+    super.key,
+    required this.controller,
+    required this.title,
+    required this.buttonLabel,
+    this.onPressed,
+  });
+
+  final TextEditingController controller;
+  final String title;
+  final String buttonLabel;
+  final void Function()? onPressed;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return AlertDialog(
+      title: Text(title),
+      content: TextFormField(
+        controller: controller,
+      ),
+      actions: [
+        TextButton(
+          onPressed: onPressed,
+          child: Text(buttonLabel),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('戻る'),
+        ),
+      ],
     );
   }
 }
