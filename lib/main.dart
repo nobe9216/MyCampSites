@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_camp_sites/page/camp_sites_page.dart';
-import 'package:my_camp_sites/providers/isar_provider.dart';
+// import 'package:my_camp_sites/page/camp_sites_page.dart';
+// import 'package:my_camp_sites/providers/isar_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,27 +46,28 @@ class _TopPageState extends ConsumerState<TopPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isar = ref.watch(isarProvider.future);
+    // final isar = ref.watch(isarProvider.future);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('トップ'),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-                onPressed: () async {
-                  final navigator = Navigator.of(context);
-                  final isar0 = await isar;
-                  navigator.push(
-                    MaterialPageRoute(
-                      builder: (context) => CampSitesPage(isar: isar0),
-                    ),
-                  );
-                },
-                child: const Text('キャンプ場一覧'))
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     final navigator = Navigator.of(context);
+            //     final isar0 = await isar;
+            //     navigator.push(
+            //       MaterialPageRoute(
+            //         builder: (context) => CampSitesPage(isar: isar0),
+            //       ),
+            //     );
+            //   },
+            //   child: const Text('キャンプ場一覧'),
+            // ),
           ],
         ),
       ),
