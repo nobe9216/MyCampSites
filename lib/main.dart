@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-// import 'package:my_camp_sites/page/camp_sites_page.dart';
-// import 'package:my_camp_sites/providers/isar_provider.dart';
+import 'package:my_camp_sites/page/camp_sites_page.dart';
+import 'package:my_camp_sites/providers/isar_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MyCampSites',
+      title: 'My Camp Sites',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
@@ -40,34 +40,35 @@ class _TopPageState extends ConsumerState<TopPage> {
 
   @override
   void dispose() {
+    // TODO(y.yamanobe): 必要？
     nameController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // final isar = ref.watch(isarProvider.future);
+    final isar = ref.watch(isarProvider.future);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('トップ'),
+        title: const Text('Top'),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // ElevatedButton(
-            //   onPressed: () async {
-            //     final navigator = Navigator.of(context);
-            //     final isar0 = await isar;
-            //     navigator.push(
-            //       MaterialPageRoute(
-            //         builder: (context) => CampSitesPage(isar: isar0),
-            //       ),
-            //     );
-            //   },
-            //   child: const Text('キャンプ場一覧'),
-            // ),
+            ElevatedButton(
+              onPressed: () async {
+                final navigator = Navigator.of(context);
+                final isar0 = await isar;
+                navigator.push(
+                  MaterialPageRoute(
+                    builder: (context) => CampSitesPage(isar: isar0),
+                  ),
+                );
+              },
+              child: const Text('キャンプ場一覧'),
+            ),
           ],
         ),
       ),
@@ -92,7 +93,12 @@ class AddCampSiteDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AlertDialog(
-      title: Text(title),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 14,
+        ),
+      ),
       content: TextFormField(
         controller: controller,
       ),

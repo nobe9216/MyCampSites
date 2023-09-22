@@ -23,13 +23,13 @@ class CampSitesPage extends HookConsumerWidget {
     final nameController = TextEditingController();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('キャンプ場一覧')),
+      appBar: AppBar(title: const Text('キャンプ場 一覧')),
       floatingActionButton: FloatingActionButton(
         onPressed: () => showDialog(
           context: context,
           builder: (context) => AddCampSiteDialog(
             controller: nameController,
-            title: 'キャンプ場追加',
+            title: 'キャンプ場 追加',
             buttonLabel: '追加',
             onPressed: () async {
               final pop = Navigator.pop(context);

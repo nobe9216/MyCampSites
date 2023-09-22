@@ -2,7 +2,9 @@ import 'package:isar/isar.dart';
 import 'package:my_camp_sites/model/camp_site.dart';
 
 class CampSiteService {
-  const CampSiteService(this.isar);
+  const CampSiteService(
+    this.isar,
+  );
   final Isar isar;
 
   Stream<CampSite> watchCampSite(Id id) async* {
