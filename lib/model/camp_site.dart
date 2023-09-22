@@ -7,6 +7,7 @@ class CampSite {
     this.name,
     this.address,
     this.phoneNumber,
+    this.memo,
     required this.updatedAt,
   })  : id = Isar.autoIncrement,
         createdAt = DateTime.now();
@@ -16,6 +17,7 @@ class CampSite {
   String? name;
   String? address;
   String? phoneNumber;
+  String? memo;
   final DateTime createdAt;
   final DateTime updatedAt;
 }

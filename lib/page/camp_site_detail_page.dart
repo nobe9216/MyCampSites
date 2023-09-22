@@ -21,12 +21,14 @@ class CampSiteDetailPage extends HookConsumerWidget {
     final addressController = TextEditingController(text: campSite.address);
     final phoneNumberController =
         TextEditingController(text: campSite.phoneNumber);
+    final memoController = TextEditingController(text: campSite.memo);
     const labelStyle = TextStyle(
       fontSize: 10,
     );
     final formFieldDecoration = InputDecoration(
       border: readOnly ? InputBorder.none : null,
     );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(campSite.name ?? '名無し'),
@@ -45,11 +47,16 @@ class CampSiteDetailPage extends HookConsumerWidget {
                 child: FilledButton(
                   onPressed: () async {
                     if (!readOnly) {
+                      // TODO(y.yamanobe): 冗長性解消
                       final campSiteService0 = await campSiteService;
                       campSite.name = nameController.text;
                       campSite.address = addressController.text;
                       campSite.phoneNumber = phoneNumberController.text;
+                      campSite.memo = memoController.text;
                       nameController.clear();
+                      addressController.clear();
+                      phoneNumberController.clear();
+                      memoController.clear();
                       campSiteService0.addCampSite(campSite);
                     }
                     ref.read(_readOnlyProvider.notifier).state = !readOnly;
@@ -84,10 +91,68 @@ class CampSiteDetailPage extends HookConsumerWidget {
                 readOnly: readOnly,
                 decoration: formFieldDecoration,
               ),
+              const Text(
+                'メモ',
+                style: labelStyle,
+              ),
+              TextFormField(
+                controller: memoController,
+                readOnly: readOnly,
+                decoration: formFieldDecoration,
+              ),
+              // TODO(y.yamanobe): 削除ボタンを表示すると、この画面に遷移できなくなる
+              // const SizedBox(
+              //   height: 50,
+              // ),
+              // _DeleteButton(
+              //   campSite: campSite,
+              // ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _DeleteButton extends HookConsumerWidget {
+  const _DeleteButton({
+    required this.campSite,
+  });
+
+  final CampSite campSite;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final campSiteService = ref.watch(campSiteServiceProvider.future);
+    final pop = Navigator.pop(context);
+
+    return FilledButton(
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: const Text('削除しますか？'),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  final campSiteService0 = await campSiteService;
+                  campSiteService0.removeCampSite(campSite.id);
+                  pop;
+                },
+                child: const Text('はい'),
+              ),
+              TextButton(
+                onPressed: () {
+                  pop;
+                },
+                child: const Text('いいえ'),
+              ),
+            ],
+          ),
+        );
+      },
+      child: const Text('削除'),
     );
   }
 }

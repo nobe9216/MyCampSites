@@ -21,6 +21,7 @@ class CampSitesPage extends HookConsumerWidget {
     final campSiteService = ref.watch(campSiteServiceProvider.future);
     final campSiteList = ref.watch(campSiteListProvider.future);
     final nameController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(title: const Text('キャンプ場一覧')),
       floatingActionButton: FloatingActionButton(
