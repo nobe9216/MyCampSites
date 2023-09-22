@@ -59,10 +59,10 @@ class _TopPageState extends ConsumerState<TopPage> {
             ElevatedButton(
                 onPressed: () async {
                   final navigator = Navigator.of(context);
-                  final _isar = await isar;
+                  final isar0 = await isar;
                   navigator.push(
                     MaterialPageRoute(
-                      builder: (context) => CampSitesPage(isar: _isar),
+                      builder: (context) => CampSitesPage(isar: isar0),
                     ),
                   );
                 },

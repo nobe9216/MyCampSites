@@ -5,6 +5,8 @@ part 'camp_site.g.dart';
 class CampSite {
   CampSite({
     this.name,
+    this.address,
+    this.phoneNumber,
     required this.updatedAt,
   })  : id = Isar.autoIncrement,
         createdAt = DateTime.now();
@@ -12,6 +14,8 @@ class CampSite {
   Id id;
 
   String? name;
+  String? address;
+  String? phoneNumber;
   final DateTime createdAt;
   final DateTime updatedAt;
 }
