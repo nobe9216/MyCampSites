@@ -40,7 +40,6 @@ class _TopPageState extends ConsumerState<TopPage> {
 
   @override
   void dispose() {
-    // TODO(y.yamanobe): 必要？
     nameController.dispose();
     super.dispose();
   }

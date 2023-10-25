@@ -100,13 +100,12 @@ class CampSiteDetailPage extends HookConsumerWidget {
                 readOnly: readOnly,
                 decoration: formFieldDecoration,
               ),
-              // TODO(y.yamanobe): 削除ボタンを表示すると、この画面に遷移できなくなる
-              // const SizedBox(
-              //   height: 50,
-              // ),
-              // _DeleteButton(
-              //   campSite: campSite,
-              // ),
+              const SizedBox(
+                height: 50,
+              ),
+              _DeleteButton(
+                campSite: campSite,
+              ),
             ],
           ),
         ),
@@ -125,7 +124,7 @@ class _DeleteButton extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final campSiteService = ref.watch(campSiteServiceProvider.future);
-    final pop = Navigator.pop(context);
+    final navigator = Navigator.of(context);
 
     return FilledButton(
       onPressed: () {
@@ -138,13 +137,13 @@ class _DeleteButton extends HookConsumerWidget {
                 onPressed: () async {
                   final campSiteService0 = await campSiteService;
                   campSiteService0.removeCampSite(campSite.id);
-                  pop;
+                  navigator.pop();
                 },
                 child: const Text('はい'),
               ),
               TextButton(
                 onPressed: () {
-                  pop;
+                  navigator.pop();
                 },
                 child: const Text('いいえ'),
               ),

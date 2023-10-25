@@ -6,7 +6,7 @@ part of 'camp_site_service_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$campSiteServiceHash() => r'bf1c8de8fa213f92dc7ccb5bc21cb9d40ddb154e';
+String _$campSiteServiceHash() => r'e0d61e13c604828bcc1495be803894bce3ae1684';
 
 /// See also [campSiteService].
 @ProviderFor(campSiteService)
@@ -21,7 +21,7 @@ final campSiteServiceProvider = FutureProvider<CampSiteService>.internal(
 );
 
 typedef CampSiteServiceRef = FutureProviderRef<CampSiteService>;
-String _$campSiteDetailHash() => r'2b6e959e39072c60b27c4b1406c799ae4ff26b60';
+String _$campSiteDetailHash() => r'9a8600fe1bc58d7e30553525e516ab51245d1e34';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -170,7 +170,7 @@ class _CampSiteDetailProviderElement
   int get id => (origin as CampSiteDetailProvider).id;
 }
 
-String _$campSiteListHash() => r'b776245c71dd5e714775ec8b8c78e266c8c2faf2';
+String _$campSiteListHash() => r'bbcb513406769eb06304f265fbcc09cd1654764e';
 
 /// See also [campSiteList].
 @ProviderFor(campSiteList)
