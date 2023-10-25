@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:input_form_controller/input_form_controller.dart';
+import 'package:logger/logger.dart';
+import 'package:my_camp_sites/controller/camp_site_input_form_controller.dart';
 import 'package:my_camp_sites/page/camp_sites_page.dart';
 import 'package:my_camp_sites/providers/isar_provider.dart';
+
+final logger = Logger(
+  printer: PrettyPrinter(
+    methodCount: 10,
+  ),
+);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -78,41 +87,46 @@ class _TopPageState extends ConsumerState<TopPage> {
 class AddCampSiteDialog extends HookConsumerWidget {
   const AddCampSiteDialog({
     super.key,
-    required this.controller,
+    required this.textEditingController,
+    required this.inputFormController,
     required this.title,
     required this.buttonLabel,
     this.onPressed,
   });
 
-  final TextEditingController controller;
+  final TextEditingController textEditingController;
+  final InputFormController inputFormController;
   final String title;
   final String buttonLabel;
   final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return AlertDialog(
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 14,
+    return Form(
+      key: campSiteFormKey,
+      child: AlertDialog(
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 14,
+          ),
         ),
+        content: TextFormField(
+          controller: textEditingController,
+        ),
+        actions: [
+          TextButton(
+            onPressed: onPressed,
+            child: Text(buttonLabel),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('戻る'),
+          ),
+        ],
       ),
-      content: TextFormField(
-        controller: controller,
-      ),
-      actions: [
-        TextButton(
-          onPressed: onPressed,
-          child: Text(buttonLabel),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('戻る'),
-        ),
-      ],
     );
   }
 }

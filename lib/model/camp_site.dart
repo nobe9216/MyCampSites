@@ -20,4 +20,19 @@ class CampSite {
   String? memo;
   final DateTime createdAt;
   final DateTime updatedAt;
+
+  CampSite copyWith({
+    String? name,
+    String? address,
+    String? phoneNumber,
+    String? memo,
+    DateTime? updatedAt,
+  }) =>
+      CampSite(
+        name: name ?? this.name,
+        address: address ?? this.address,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        memo: memo ?? this.memo,
+        updatedAt: updatedAt ?? DateTime.now(),
+      );
 }

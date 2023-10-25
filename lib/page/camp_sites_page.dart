@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:isar/isar.dart';
+import 'package:my_camp_sites/controller/camp_site_input_form_controller.dart';
 import 'package:my_camp_sites/main.dart';
 import 'package:my_camp_sites/model/camp_site.dart';
 import 'package:my_camp_sites/page/camp_site_detail_page.dart';
@@ -18,8 +19,8 @@ class CampSitesPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isar = ref.watch(isarProvider.future);
-    final campSiteService = ref.watch(campSiteServiceProvider.future);
     final campSiteList = ref.watch(campSiteListProvider.future);
+    final inputFormController = ref.watch(campSiteInputFormProvider.notifier);
     final nameController = TextEditingController();
 
     return Scaffold(
@@ -28,19 +29,19 @@ class CampSitesPage extends HookConsumerWidget {
         onPressed: () => showDialog(
           context: context,
           builder: (context) => AddCampSiteDialog(
-            controller: nameController,
+            textEditingController: nameController,
+            inputFormController: inputFormController,
             title: 'キャンプ場 追加',
             buttonLabel: '追加',
             onPressed: () async {
-              final pop = Navigator.pop(context);
-              final campSiteService0 = await campSiteService;
-              final campSite = CampSite(
-                name: nameController.text,
-                updatedAt: DateTime.now(),
+              final navigator = Navigator.of(context);
+              inputFormController.update(
+                (currentValue) =>
+                    currentValue.copyWith(name: nameController.text),
               );
+              inputFormController.submit();
               nameController.clear();
-              campSiteService0.addCampSite(campSite);
-              pop;
+              navigator.pop();
             },
           ),
         ),
