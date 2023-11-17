@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:my_camp_sites/controller/camp_site_input_form_controller.dart';
 import 'package:my_camp_sites/model/camp_site.dart';
 import 'package:my_camp_sites/providers/camp_site_service_provider.dart';
 
@@ -15,13 +16,8 @@ class CampSiteDetailPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final campSiteService = ref.watch(campSiteServiceProvider.future);
+    final inputFormController = ref.watch(campSiteInputFormProvider.notifier);
     final readOnly = ref.watch(_readOnlyProvider);
-    final nameController = TextEditingController(text: campSite.name);
-    final addressController = TextEditingController(text: campSite.address);
-    final phoneNumberController =
-        TextEditingController(text: campSite.phoneNumber);
-    final memoController = TextEditingController(text: campSite.memo);
     const labelStyle = TextStyle(
       fontSize: 10,
     );
@@ -39,6 +35,7 @@ class CampSiteDetailPage extends HookConsumerWidget {
           horizontal: 20,
         ),
         child: Form(
+          key: campSiteFormKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,17 +44,7 @@ class CampSiteDetailPage extends HookConsumerWidget {
                 child: FilledButton(
                   onPressed: () async {
                     if (!readOnly) {
-                      // TODO(y.yamanobe): 冗長性解消
-                      final campSiteService0 = await campSiteService;
-                      campSite.name = nameController.text;
-                      campSite.address = addressController.text;
-                      campSite.phoneNumber = phoneNumberController.text;
-                      campSite.memo = memoController.text;
-                      nameController.clear();
-                      addressController.clear();
-                      phoneNumberController.clear();
-                      memoController.clear();
-                      campSiteService0.addCampSite(campSite);
+                      inputFormController.submit();
                     }
                     ref.read(_readOnlyProvider.notifier).state = !readOnly;
                   },
@@ -69,36 +56,52 @@ class CampSiteDetailPage extends HookConsumerWidget {
                 style: labelStyle,
               ),
               TextFormField(
-                controller: nameController,
+                initialValue: campSite.name,
                 readOnly: readOnly,
                 decoration: formFieldDecoration,
+                onSaved: (newValue) {
+                  inputFormController
+                      .update((currentValue) => currentValue..name = newValue);
+                },
               ),
               const Text(
                 '住所',
                 style: labelStyle,
               ),
               TextFormField(
-                controller: addressController,
+                initialValue: campSite.address,
                 readOnly: readOnly,
                 decoration: formFieldDecoration,
+                onSaved: (newValue) {
+                  inputFormController.update(
+                      (currentValue) => currentValue..address = newValue);
+                },
               ),
               const Text(
                 '電話番号',
                 style: labelStyle,
               ),
               TextFormField(
-                controller: phoneNumberController,
+                initialValue: campSite.phoneNumber,
                 readOnly: readOnly,
                 decoration: formFieldDecoration,
+                onSaved: (newValue) {
+                  inputFormController.update(
+                      (currentValue) => currentValue..phoneNumber = newValue);
+                },
               ),
               const Text(
                 'メモ',
                 style: labelStyle,
               ),
               TextFormField(
-                controller: memoController,
+                initialValue: campSite.memo,
                 readOnly: readOnly,
                 decoration: formFieldDecoration,
+                onSaved: (newValue) {
+                  inputFormController
+                      .update((currentValue) => currentValue..memo = newValue);
+                },
               ),
               const SizedBox(
                 height: 50,
@@ -135,8 +138,9 @@ class _DeleteButton extends HookConsumerWidget {
             actions: [
               TextButton(
                 onPressed: () async {
-                  final campSiteService0 = await campSiteService;
-                  campSiteService0.removeCampSite(campSite.id);
+                  final service = await campSiteService;
+                  service.removeCampSite(campSite.id);
+                  navigator.pop();
                   navigator.pop();
                 },
                 child: const Text('はい'),

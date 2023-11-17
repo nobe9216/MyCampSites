@@ -1,38 +1,11 @@
 import 'package:isar/isar.dart';
+import 'package:my_camp_sites/model/model_base.dart';
 part 'camp_site.g.dart';
 
 @collection
-class CampSite {
-  CampSite({
-    this.name,
-    this.address,
-    this.phoneNumber,
-    this.memo,
-    required this.updatedAt,
-  })  : id = Isar.autoIncrement,
-        createdAt = DateTime.now();
-
-  Id id;
-
+class CampSite extends ModelBase {
   String? name;
   String? address;
   String? phoneNumber;
   String? memo;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-
-  CampSite copyWith({
-    String? name,
-    String? address,
-    String? phoneNumber,
-    String? memo,
-    DateTime? updatedAt,
-  }) =>
-      CampSite(
-        name: name ?? this.name,
-        address: address ?? this.address,
-        phoneNumber: phoneNumber ?? this.phoneNumber,
-        memo: memo ?? this.memo,
-        updatedAt: updatedAt ?? DateTime.now(),
-      );
 }

@@ -115,14 +115,14 @@ CampSite _campSiteDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = CampSite(
-    address: reader.readStringOrNull(offsets[0]),
-    memo: reader.readStringOrNull(offsets[2]),
-    name: reader.readStringOrNull(offsets[3]),
-    phoneNumber: reader.readStringOrNull(offsets[4]),
-    updatedAt: reader.readDateTime(offsets[5]),
-  );
+  final object = CampSite();
+  object.address = reader.readStringOrNull(offsets[0]);
+  object.createdAt = reader.readDateTimeOrNull(offsets[1]);
   object.id = id;
+  object.memo = reader.readStringOrNull(offsets[2]);
+  object.name = reader.readStringOrNull(offsets[3]);
+  object.phoneNumber = reader.readStringOrNull(offsets[4]);
+  object.updatedAt = reader.readDateTimeOrNull(offsets[5]);
   return object;
 }
 
@@ -136,7 +136,7 @@ P _campSiteDeserializeProp<P>(
     case 0:
       return (reader.readStringOrNull(offset)) as P;
     case 1:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
@@ -144,7 +144,7 @@ P _campSiteDeserializeProp<P>(
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -385,8 +385,24 @@ extension CampSiteQueryFilter
     });
   }
 
+  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> createdAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'createdAt',
+      ));
+    });
+  }
+
+  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> createdAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'createdAt',
+      ));
+    });
+  }
+
   QueryBuilder<CampSite, CampSite, QAfterFilterCondition> createdAtEqualTo(
-      DateTime value) {
+      DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'createdAt',
@@ -396,7 +412,7 @@ extension CampSiteQueryFilter
   }
 
   QueryBuilder<CampSite, CampSite, QAfterFilterCondition> createdAtGreaterThan(
-    DateTime value, {
+    DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -409,7 +425,7 @@ extension CampSiteQueryFilter
   }
 
   QueryBuilder<CampSite, CampSite, QAfterFilterCondition> createdAtLessThan(
-    DateTime value, {
+    DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -422,8 +438,8 @@ extension CampSiteQueryFilter
   }
 
   QueryBuilder<CampSite, CampSite, QAfterFilterCondition> createdAtBetween(
-    DateTime lower,
-    DateTime upper, {
+    DateTime? lower,
+    DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -931,8 +947,24 @@ extension CampSiteQueryFilter
     });
   }
 
+  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> updatedAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'updatedAt',
+      ));
+    });
+  }
+
+  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> updatedAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'updatedAt',
+      ));
+    });
+  }
+
   QueryBuilder<CampSite, CampSite, QAfterFilterCondition> updatedAtEqualTo(
-      DateTime value) {
+      DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'updatedAt',
@@ -942,7 +974,7 @@ extension CampSiteQueryFilter
   }
 
   QueryBuilder<CampSite, CampSite, QAfterFilterCondition> updatedAtGreaterThan(
-    DateTime value, {
+    DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -955,7 +987,7 @@ extension CampSiteQueryFilter
   }
 
   QueryBuilder<CampSite, CampSite, QAfterFilterCondition> updatedAtLessThan(
-    DateTime value, {
+    DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -968,8 +1000,8 @@ extension CampSiteQueryFilter
   }
 
   QueryBuilder<CampSite, CampSite, QAfterFilterCondition> updatedAtBetween(
-    DateTime lower,
-    DateTime upper, {
+    DateTime? lower,
+    DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -1209,7 +1241,7 @@ extension CampSiteQueryProperty
     });
   }
 
-  QueryBuilder<CampSite, DateTime, QQueryOperations> createdAtProperty() {
+  QueryBuilder<CampSite, DateTime?, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
     });
@@ -1233,7 +1265,7 @@ extension CampSiteQueryProperty
     });
   }
 
-  QueryBuilder<CampSite, DateTime, QQueryOperations> updatedAtProperty() {
+  QueryBuilder<CampSite, DateTime?, QQueryOperations> updatedAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'updatedAt');
     });

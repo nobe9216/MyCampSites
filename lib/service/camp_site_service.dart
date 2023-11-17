@@ -1,8 +1,9 @@
 import 'package:isar/isar.dart';
 import 'package:my_camp_sites/model/camp_site.dart';
+import 'package:my_camp_sites/service/service_base.dart';
 
-class CampSiteService {
-  const CampSiteService(
+class CampSiteService extends ServiceBase {
+  CampSiteService(
     this.isar,
   );
   final Isar isar;
@@ -31,6 +32,8 @@ class CampSiteService {
 
   Future<CampSite> addCampSite(CampSite campSite) async {
     await isar.writeTxn(() async {
+      createdAt(campSite);
+      updatedAt(campSite);
       await isar.campSites.put(campSite);
     });
     return campSite;
