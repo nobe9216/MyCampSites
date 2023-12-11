@@ -9,7 +9,7 @@ part 'camp_site_service_provider.g.dart';
 @Riverpod(keepAlive: true)
 Future<CampSiteService> campSiteService(CampSiteServiceRef ref) async {
   final isar = await ref.read(isarProvider.future);
-  return CampSiteService(isar);
+  return CampSiteService(isar: isar);
 }
 
 @riverpod

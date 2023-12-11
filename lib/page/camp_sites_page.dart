@@ -26,16 +26,19 @@ class CampSitesPage extends HookConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => showDialog(
           context: context,
-          builder: (context) => AddCampSiteDialog(
-            inputFormController: inputFormController,
-            title: 'キャンプ場 追加',
-            buttonLabel: '追加',
-            onPressed: () async {
-              final navigator = Navigator.of(context);
-              await inputFormController.submit();
-              navigator.pop();
-            },
-          ),
+          builder: (context) {
+            inputFormController.reset;
+            return AddCampSiteDialog(
+              inputFormController: inputFormController,
+              title: 'キャンプ場 追加',
+              buttonLabel: '追加',
+              onPressed: () async {
+                final navigator = Navigator.of(context);
+                await inputFormController.submit();
+                navigator.pop();
+              },
+            );
+          },
         ),
         child: const Icon(Icons.add),
       ),

@@ -13,11 +13,9 @@ final campSiteInputFormProvider = StateNotifierProvider.autoDispose<
   (ref) => InputFormController<CampSite>(
     formKey: campSiteFormKey,
     initialValue: CampSite(),
-    // TODO(y.yamanobe):
-    // initialValue: ref.watch(initialCampSiteProvider),
     onSubmit: (value) async {
       final campSiteService = await ref.read(campSiteServiceProvider.future);
-      campSiteService.addCampSite(value);
+      campSiteService.create(value);
     },
     onDelete: (value) async {
       final isar = await ref.read(isarProvider.future);
@@ -27,8 +25,6 @@ final campSiteInputFormProvider = StateNotifierProvider.autoDispose<
     },
   ),
 );
-
-extension CampSiteInputFormController on InputFormController<CampSite> {}
 
 final initialCampSiteProvider =
     StateNotifierProvider<InitialCampSiteNotifier, CampSite>(

@@ -1,11 +1,22 @@
-import 'package:my_camp_sites/model/camp_site.dart';
+import 'package:isar/isar.dart';
+import 'package:my_camp_sites/model/model_base.dart';
 
-class ServiceBase {
-  void createdAt(CampSite campSite) {
-    campSite.createdAt ??= DateTime.now();
-  }
+abstract class ServiceBase<T extends ModelBase> {
+  ServiceBase({
+    required this.isar,
+  });
 
-  void updatedAt(CampSite campSite) {
-    campSite.updatedAt = DateTime.now();
+  final Isar isar;
+
+  IsarCollection<T> get collection;
+
+  Future<T> create(T data) async {
+    await isar.writeTxn(() async {
+      final date = DateTime.now();
+      data.createdAt = date;
+      data.updatedAt = date;
+      await collection.put(data);
+    });
+    return data;
   }
 }
