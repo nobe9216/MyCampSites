@@ -63,7 +63,7 @@ class CampSitesPage extends HookConsumerWidget {
                     icon: const Icon(Icons.delete),
                     onPressed: () async {
                       final campSiteService0 = await campSiteService;
-                      campSiteService0.removeCampSite(campSite.id);
+                      campSiteService0.delete(campSite.id);
                     },
                   ),
                   onTap: () => Navigator.push(

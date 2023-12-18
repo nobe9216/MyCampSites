@@ -139,7 +139,7 @@ class _DeleteButton extends HookConsumerWidget {
               TextButton(
                 onPressed: () async {
                   final service = await campSiteService;
-                  service.removeCampSite(campSite.id);
+                  service.delete(campSite.id);
                   navigator.pop();
                   navigator.pop();
                 },

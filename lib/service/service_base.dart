@@ -19,4 +19,11 @@ abstract class ServiceBase<T extends ModelBase> {
     });
     return data;
   }
+
+  Future<T?> delete(int id) async {
+    await isar.writeTxn(() async {
+      await collection.delete(id);
+    });
+    return collection.get(id);
+  }
 }
