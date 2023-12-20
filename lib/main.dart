@@ -25,12 +25,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'My Camp Sites',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: const TopPage(),
+      home: TopPage(),
     );
   }
 }

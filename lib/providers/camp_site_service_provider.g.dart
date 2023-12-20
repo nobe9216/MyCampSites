@@ -6,7 +6,7 @@ part of 'camp_site_service_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$campSiteServiceHash() => r'e0d61e13c604828bcc1495be803894bce3ae1684';
+String _$campSiteServiceHash() => r'9e21791bf28264ff6ab8d866774f83e9e7a284a3';
 
 /// See also [campSiteService].
 @ProviderFor(campSiteService)

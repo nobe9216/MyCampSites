@@ -15,7 +15,7 @@ final campSiteInputFormProvider = StateNotifierProvider.autoDispose<
     initialValue: CampSite(),
     onSubmit: (value) async {
       final campSiteService = await ref.read(campSiteServiceProvider.future);
-      campSiteService.create(value);
+      campSiteService.createOrUpdate(value);
     },
     onDelete: (value) async {
       final isar = await ref.read(isarProvider.future);
@@ -25,18 +25,3 @@ final campSiteInputFormProvider = StateNotifierProvider.autoDispose<
     },
   ),
 );
-
-final initialCampSiteProvider =
-    StateNotifierProvider<InitialCampSiteNotifier, CampSite>(
-        (ref) => InitialCampSiteNotifier(
-              emptyData: CampSite(),
-            ));
-
-class InitialCampSiteNotifier extends StateNotifier<CampSite> {
-  InitialCampSiteNotifier({
-    required this.emptyData,
-  }) : super(emptyData);
-  final CampSite emptyData;
-
-  void update(CampSite data) => state = data;
-}

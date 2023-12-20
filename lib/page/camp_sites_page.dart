@@ -24,22 +24,24 @@ class CampSitesPage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('キャンプ場 一覧')),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => showDialog(
-          context: context,
-          builder: (context) {
-            inputFormController.reset;
-            return AddCampSiteDialog(
-              inputFormController: inputFormController,
-              title: 'キャンプ場 追加',
-              buttonLabel: '追加',
-              onPressed: () async {
-                final navigator = Navigator.of(context);
-                await inputFormController.submit();
-                navigator.pop();
-              },
-            );
-          },
-        ),
+        onPressed: () {
+          inputFormController.reset(CampSite());
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AddCampSiteDialog(
+                inputFormController: inputFormController,
+                title: 'キャンプ場 追加',
+                buttonLabel: '追加',
+                onPressed: () async {
+                  final navigator = Navigator.of(context);
+                  await inputFormController.submit();
+                  navigator.pop();
+                },
+              );
+            },
+          );
+        },
         child: const Icon(Icons.add),
       ),
       body: FutureBuilder(
@@ -66,14 +68,17 @@ class CampSitesPage extends HookConsumerWidget {
                       campSiteService0.delete(campSite.id);
                     },
                   ),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CampSiteDetailPage(
-                        campSite: campSite,
+                  onTap: () {
+                    inputFormController.reset(campSite);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CampSiteDetailPage(
+                          campSite: campSite,
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 );
               },
             );
@@ -115,8 +120,6 @@ class AddCampSiteDialog extends HookConsumerWidget {
         key: campSiteFormKey,
         child: TextFormField(
           onSaved: (newValue) {
-            // TODO(y.yamanobe):
-            // ref.read(initialCampSiteProvider.notifier).update(CampSite());
             inputFormController.update(
               (currentValue) => currentValue..name = newValue,
             );

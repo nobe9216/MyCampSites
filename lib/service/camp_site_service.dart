@@ -31,10 +31,4 @@ class CampSiteService extends ServiceBase<CampSite> {
       }
     }
   }
-
-  removeCampSite(int id) async {
-    await isar.writeTxn(() async {
-      await isar.campSites.delete(id);
-    });
-  }
 }

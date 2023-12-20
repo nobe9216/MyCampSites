@@ -10,7 +10,7 @@ abstract class ServiceBase<T extends ModelBase> {
 
   IsarCollection<T> get collection;
 
-  Future<T> create(T data) async {
+  Future<T> createOrUpdate(T data) async {
     await isar.writeTxn(() async {
       final date = DateTime.now();
       data.createdAt = date;
