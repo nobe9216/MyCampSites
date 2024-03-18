@@ -1,8 +1,10 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:my_camp_sites/page/camp_sites_page.dart';
 import 'package:my_camp_sites/providers/isar_provider.dart';
+import 'package:my_camp_sites/themes/main_theme.dart';
 
 final logger = Logger(
   printer: PrettyPrinter(
@@ -25,9 +27,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'My Camp Sites',
-      home: TopPage(),
+      theme: FlexThemeData.light(
+        scheme: FlexScheme.green,
+      ),
+      darkTheme: FlexThemeData.dark(
+        scheme: FlexScheme.greyLaw,
+      ),
+      themeMode: ThemeMode.system,
+      home: const MainTheme(
+        child: TopPage(),
+      ),
     );
   }
 }
@@ -60,7 +71,7 @@ class _TopPageState extends ConsumerState<TopPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
+            FilledButton(
               onPressed: () async {
                 final navigator = Navigator.of(context);
                 final isar0 = await isar;

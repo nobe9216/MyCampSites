@@ -3,5 +3,8 @@
         "editor.codeActionsOnSave": {
             "source.fixAll": "explicit"
         }
-    }
+    },
+    "dart.flutterSdkPaths": [
+        ".fvm/flutter_sdk"
+    ]
 }

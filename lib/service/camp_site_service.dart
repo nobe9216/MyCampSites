@@ -2,6 +2,7 @@ import 'package:isar/isar.dart';
 import 'package:my_camp_sites/model/camp_site.dart';
 import 'package:my_camp_sites/service/service_base.dart';
 
+// TODO(y.yamanobe): クエリを渡して、そのクエリでサーバと通信するだけにする
 class CampSiteService extends ServiceBase<CampSite> {
   CampSiteService({
     required super.isar,
