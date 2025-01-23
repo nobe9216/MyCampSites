@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:my_camp_sites/page/camp_sites_page.dart';
+import 'package:my_camp_sites/page/visits_page.dart';
 import 'package:my_camp_sites/providers/isar_provider.dart';
 import 'package:my_camp_sites/themes/main_theme.dart';
 
@@ -65,7 +66,7 @@ class _TopPageState extends ConsumerState<TopPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Top'),
+        title: const Text('My Camp Sites'),
       ),
       body: Center(
         child: Column(
@@ -82,6 +83,21 @@ class _TopPageState extends ConsumerState<TopPage> {
                 );
               },
               child: const Text('キャンプ場一覧'),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            FilledButton(
+              onPressed: () async {
+                final navigator = Navigator.of(context);
+                final isar0 = await isar;
+                navigator.push(
+                  MaterialPageRoute(
+                    builder: (context) => VisitsPage(isar: isar0),
+                  ),
+                );
+              },
+              child: const Text('訪問実績一覧'),
             ),
           ],
         ),

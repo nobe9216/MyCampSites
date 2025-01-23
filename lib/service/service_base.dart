@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:isar/isar.dart';
 import 'package:my_camp_sites/model/model_base.dart';
 
+// TODO(y.yamanobe): メモ　readの機能もモデル別じゃなく、ここで共通化できるかも
 abstract class ServiceBase<T extends ModelBase> {
   ServiceBase({
     required this.isar,
@@ -21,6 +24,7 @@ abstract class ServiceBase<T extends ModelBase> {
   }
 
   Future<T?> delete(int id) async {
+    log('id: $id');
     await isar.writeTxn(() async {
       await collection.delete(id);
     });

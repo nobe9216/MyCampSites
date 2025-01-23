@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:input_form_controller/input_form_controller.dart';
 import 'package:isar/isar.dart';
 import 'package:my_camp_sites/components/dialogs.dart';
-import 'package:my_camp_sites/controller/camp_site_input_form_controller.dart';
-import 'package:my_camp_sites/model/camp_site.dart';
-import 'package:my_camp_sites/page/camp_site_detail_page.dart';
-import 'package:my_camp_sites/providers/camp_site_service_provider.dart';
+import 'package:my_camp_sites/controller/visit_input_form_controller.dart';
+import 'package:my_camp_sites/model/visit.dart';
+import 'package:my_camp_sites/page/visit_detail_page.dart';
+import 'package:my_camp_sites/providers/visited_service_provider.dart';
 import 'package:my_camp_sites/themes/main_theme.dart';
-import 'package:my_camp_sites/widgets/camp_site_form.dart';
+import 'package:my_camp_sites/widgets/visit_form.dart';
 
-class CampSitesPage extends HookConsumerWidget {
-  const CampSitesPage({
+class VisitsPage extends HookConsumerWidget {
+  const VisitsPage({
     super.key,
     required this.isar,
   });
@@ -20,54 +19,55 @@ class CampSitesPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final campSiteService = ref.watch(campSiteServiceProvider.future);
-    final campSiteList = ref.watch(campSiteListProvider.future);
-    final inputFormController = ref.watch(campSiteInputFormProvider.notifier);
+    final visitService = ref.watch(visitServiceProvider.future);
+    final visitList = ref.watch(visitListProvider.future);
+    final inputFormController = ref.watch(visitInputFormProvider.notifier);
     final navigator = Navigator.of(context);
 
     return MainTheme(
       child: Scaffold(
-        appBar: AppBar(title: const Text('キャンプ場 一覧')),
+        appBar: AppBar(title: const Text('訪問実績 一覧')),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            inputFormController.reset(CampSite());
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AddCampSiteDialog(
+            inputFormController.reset(Visit());
+            navigator.push(
+              // TODO(y.yamanobe memo): ダイアログを渡しているから背景が消える、それ以外のwidgetを渡せば背景消えない
+              MaterialPageRoute(
+                fullscreenDialog: true,
+                builder: (context) => AddVisitedDialog(
                   inputFormController: inputFormController,
-                  title: 'キャンプ場 追加',
+                  title: '訪問実績 追加',
                   buttonLabel: '追加',
                   onPressed: () async {
                     final navigator = Navigator.of(context);
                     await inputFormController.submit();
-                    if (campSiteFormKey.currentState!.validate()) {
+                    if (visitFormKey.currentState!.validate()) {
                       navigator.pop();
                     }
                   },
-                );
-              },
+                ),
+              ),
             );
           },
           child: const Icon(Icons.add),
         ),
         body: FutureBuilder(
-          future: campSiteList,
+          future: visitList,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return const Center(
-                child: Text('取得失敗'),
+              return Center(
+                child: Text('${snapshot.error}'),
               );
             } else if (snapshot.hasData) {
-              final campSiteList = snapshot.data!;
+              final visitList = snapshot.data!;
               return ListView.builder(
-                itemCount: campSiteList.length,
+                itemCount: visitList.length,
                 itemBuilder: (context, index) {
-                  final campSite = campSiteList[index];
+                  final visit = visitList[index];
                   return ListTile(
-                    title: (campSite.name).isEmpty
+                    title: (visit.impressions).isEmpty
                         ? const Text('名無し')
-                        : Text(campSite.name),
+                        : Text(visit.impressions),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete),
                       onPressed: () async {
@@ -76,8 +76,8 @@ class CampSitesPage extends HookConsumerWidget {
                           builder: (context) => ConfirmationDialog(
                             content: const Text('削除しますか？'),
                             defaultAction: () async {
-                              final service = await campSiteService;
-                              service.delete(campSite.id);
+                              final service = await visitService;
+                              service.delete(visit.id);
                               navigator.pop();
                             },
                             cancelAction: () {
@@ -88,12 +88,12 @@ class CampSitesPage extends HookConsumerWidget {
                       },
                     ),
                     onTap: () {
-                      inputFormController.reset(campSite);
+                      inputFormController.reset(visit);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CampSiteDetailPage(
-                            campSite: campSite,
+                          builder: (context) => VisitDetailPage(
+                            visit: visit,
                           ),
                         ),
                       );
@@ -109,34 +109,6 @@ class CampSitesPage extends HookConsumerWidget {
           },
         ),
       ),
-    );
-  }
-}
-
-class AddCampSiteDialog extends HookConsumerWidget {
-  const AddCampSiteDialog({
-    super.key,
-    required this.inputFormController,
-    required this.title,
-    required this.buttonLabel,
-    this.onPressed,
-  });
-
-  final InputFormController<CampSite> inputFormController;
-  final String title;
-  final String buttonLabel;
-  final void Function()? onPressed;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return AddDialog(
-      inputFormController: inputFormController,
-      title: title,
-      content: CampSiteForm(
-        inputFormController: inputFormController,
-      ),
-      buttonLabel: buttonLabel,
-      onPressed: onPressed,
     );
   }
 }

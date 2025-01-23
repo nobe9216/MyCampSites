@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_camp_sites/components/dialogs.dart';
-import 'package:my_camp_sites/controller/camp_site_input_form_controller.dart';
-import 'package:my_camp_sites/model/camp_site.dart';
-import 'package:my_camp_sites/providers/camp_site_service_provider.dart';
+import 'package:my_camp_sites/controller/visit_input_form_controller.dart';
+import 'package:my_camp_sites/model/visit.dart';
+import 'package:my_camp_sites/providers/visited_service_provider.dart';
 import 'package:my_camp_sites/themes/main_theme.dart';
-import 'package:my_camp_sites/widgets/camp_site_form.dart';
+import 'package:my_camp_sites/widgets/visit_form.dart';
 
 final _readOnlyProvider = StateProvider<bool>((ref) => true);
 
-class CampSiteDetailPage extends HookConsumerWidget {
-  const CampSiteDetailPage({
+class VisitDetailPage extends HookConsumerWidget {
+  const VisitDetailPage({
     super.key,
-    required this.campSite,
+    required this.visit,
   });
 
-  final CampSite campSite;
+  final Visit visit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final inputFormController = ref.watch(campSiteInputFormProvider.notifier);
+    final inputFormController = ref.watch(visitInputFormProvider.notifier);
     final readOnly = ref.watch(_readOnlyProvider);
 
     return MainTheme(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(campSite.name),
+          title: Text(visit.impressions),
           automaticallyImplyLeading: readOnly,
         ),
         body: Padding(
@@ -71,7 +71,7 @@ class CampSiteDetailPage extends HookConsumerWidget {
                   ),
                 ),
                 Expanded(
-                  child: CampSiteForm(
+                  child: VisitForm(
                     inputFormController: inputFormController,
                     readOnly: readOnly,
                   ),
@@ -80,7 +80,7 @@ class CampSiteDetailPage extends HookConsumerWidget {
                   height: 50,
                 ),
                 _DeleteButton(
-                  campSite: campSite,
+                  visit: visit,
                 ),
               ],
             ),
@@ -93,14 +93,14 @@ class CampSiteDetailPage extends HookConsumerWidget {
 
 class _DeleteButton extends HookConsumerWidget {
   const _DeleteButton({
-    required this.campSite,
+    required this.visit,
   });
 
-  final CampSite campSite;
+  final Visit visit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final campSiteService = ref.watch(campSiteServiceProvider.future);
+    final visitService = ref.watch(visitServiceProvider.future);
     final navigator = Navigator.of(context);
 
     return FilledButton(
@@ -110,8 +110,8 @@ class _DeleteButton extends HookConsumerWidget {
           builder: (context) => ConfirmationDialog(
             content: const Text('削除しますか？'),
             defaultAction: () async {
-              final service = await campSiteService;
-              service.delete(campSite.id);
+              final service = await visitService;
+              service.delete(visit.id);
               navigator.pop();
               navigator.pop();
             },

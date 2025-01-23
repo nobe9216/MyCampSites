@@ -22,7 +22,7 @@ class CampSiteService extends ServiceBase<CampSite> {
   }
 
   Stream<List<CampSite>> watchAllCampSites() async* {
-    final query = isar.campSites.where().sortByUpdatedAt().build();
+    final query = isar.campSites.where();
 
     await for (final results in query.watch(fireImmediately: true)) {
       if (results.isNotEmpty) {

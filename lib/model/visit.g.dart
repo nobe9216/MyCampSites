@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'camp_site.dart';
+part of 'visit.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -9,30 +9,30 @@ part of 'camp_site.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetCampSiteCollection on Isar {
-  IsarCollection<CampSite> get campSites => this.collection();
+extension GetVisitCollection on Isar {
+  IsarCollection<Visit> get visits => this.collection();
 }
 
-const CampSiteSchema = CollectionSchema(
-  name: r'CampSite',
-  id: 4521682128850538997,
+const VisitSchema = CollectionSchema(
+  name: r'Visit',
+  id: -2497115541782241183,
   properties: {},
-  estimateSize: _campSiteEstimateSize,
-  serialize: _campSiteSerialize,
-  deserialize: _campSiteDeserialize,
-  deserializeProp: _campSiteDeserializeProp,
+  estimateSize: _visitEstimateSize,
+  serialize: _visitSerialize,
+  deserialize: _visitDeserialize,
+  deserializeProp: _visitDeserializeProp,
   idName: r'id',
   indexes: {},
   links: {},
   embeddedSchemas: {},
-  getId: _campSiteGetId,
-  getLinks: _campSiteGetLinks,
-  attach: _campSiteAttach,
+  getId: _visitGetId,
+  getLinks: _visitGetLinks,
+  attach: _visitAttach,
   version: '3.1.0+1',
 );
 
-int _campSiteEstimateSize(
-  CampSite object,
+int _visitEstimateSize(
+  Visit object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -40,23 +40,23 @@ int _campSiteEstimateSize(
   return bytesCount;
 }
 
-void _campSiteSerialize(
-  CampSite object,
+void _visitSerialize(
+  Visit object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {}
-CampSite _campSiteDeserialize(
+Visit _visitDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = CampSite();
+  final object = Visit();
   return object;
 }
 
-P _campSiteDeserializeProp<P>(
+P _visitDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -68,26 +68,26 @@ P _campSiteDeserializeProp<P>(
   }
 }
 
-Id _campSiteGetId(CampSite object) {
+Id _visitGetId(Visit object) {
   return object.id;
 }
 
-List<IsarLinkBase<dynamic>> _campSiteGetLinks(CampSite object) {
+List<IsarLinkBase<dynamic>> _visitGetLinks(Visit object) {
   return [];
 }
 
-void _campSiteAttach(IsarCollection<dynamic> col, Id id, CampSite object) {}
+void _visitAttach(IsarCollection<dynamic> col, Id id, Visit object) {}
 
-extension CampSiteQueryWhereSort on QueryBuilder<CampSite, CampSite, QWhere> {
-  QueryBuilder<CampSite, CampSite, QAfterWhere> anyId() {
+extension VisitQueryWhereSort on QueryBuilder<Visit, Visit, QWhere> {
+  QueryBuilder<Visit, Visit, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension CampSiteQueryWhere on QueryBuilder<CampSite, CampSite, QWhereClause> {
-  QueryBuilder<CampSite, CampSite, QAfterWhereClause> idEqualTo(Id id) {
+extension VisitQueryWhere on QueryBuilder<Visit, Visit, QWhereClause> {
+  QueryBuilder<Visit, Visit, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -96,7 +96,7 @@ extension CampSiteQueryWhere on QueryBuilder<CampSite, CampSite, QWhereClause> {
     });
   }
 
-  QueryBuilder<CampSite, CampSite, QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<Visit, Visit, QAfterWhereClause> idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -118,7 +118,7 @@ extension CampSiteQueryWhere on QueryBuilder<CampSite, CampSite, QWhereClause> {
     });
   }
 
-  QueryBuilder<CampSite, CampSite, QAfterWhereClause> idGreaterThan(Id id,
+  QueryBuilder<Visit, Visit, QAfterWhereClause> idGreaterThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -127,7 +127,7 @@ extension CampSiteQueryWhere on QueryBuilder<CampSite, CampSite, QWhereClause> {
     });
   }
 
-  QueryBuilder<CampSite, CampSite, QAfterWhereClause> idLessThan(Id id,
+  QueryBuilder<Visit, Visit, QAfterWhereClause> idLessThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -136,7 +136,7 @@ extension CampSiteQueryWhere on QueryBuilder<CampSite, CampSite, QWhereClause> {
     });
   }
 
-  QueryBuilder<CampSite, CampSite, QAfterWhereClause> idBetween(
+  QueryBuilder<Visit, Visit, QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -153,9 +153,8 @@ extension CampSiteQueryWhere on QueryBuilder<CampSite, CampSite, QWhereClause> {
   }
 }
 
-extension CampSiteQueryFilter
-    on QueryBuilder<CampSite, CampSite, QFilterCondition> {
-  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> idEqualTo(Id value) {
+extension VisitQueryFilter on QueryBuilder<Visit, Visit, QFilterCondition> {
+  QueryBuilder<Visit, Visit, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -164,7 +163,7 @@ extension CampSiteQueryFilter
     });
   }
 
-  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<Visit, Visit, QAfterFilterCondition> idGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -177,7 +176,7 @@ extension CampSiteQueryFilter
     });
   }
 
-  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> idLessThan(
+  QueryBuilder<Visit, Visit, QAfterFilterCondition> idLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -190,7 +189,7 @@ extension CampSiteQueryFilter
     });
   }
 
-  QueryBuilder<CampSite, CampSite, QAfterFilterCondition> idBetween(
+  QueryBuilder<Visit, Visit, QAfterFilterCondition> idBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -208,35 +207,30 @@ extension CampSiteQueryFilter
   }
 }
 
-extension CampSiteQueryObject
-    on QueryBuilder<CampSite, CampSite, QFilterCondition> {}
+extension VisitQueryObject on QueryBuilder<Visit, Visit, QFilterCondition> {}
 
-extension CampSiteQueryLinks
-    on QueryBuilder<CampSite, CampSite, QFilterCondition> {}
+extension VisitQueryLinks on QueryBuilder<Visit, Visit, QFilterCondition> {}
 
-extension CampSiteQuerySortBy on QueryBuilder<CampSite, CampSite, QSortBy> {}
+extension VisitQuerySortBy on QueryBuilder<Visit, Visit, QSortBy> {}
 
-extension CampSiteQuerySortThenBy
-    on QueryBuilder<CampSite, CampSite, QSortThenBy> {
-  QueryBuilder<CampSite, CampSite, QAfterSortBy> thenById() {
+extension VisitQuerySortThenBy on QueryBuilder<Visit, Visit, QSortThenBy> {
+  QueryBuilder<Visit, Visit, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<CampSite, CampSite, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<Visit, Visit, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 }
 
-extension CampSiteQueryWhereDistinct
-    on QueryBuilder<CampSite, CampSite, QDistinct> {}
+extension VisitQueryWhereDistinct on QueryBuilder<Visit, Visit, QDistinct> {}
 
-extension CampSiteQueryProperty
-    on QueryBuilder<CampSite, CampSite, QQueryProperty> {
-  QueryBuilder<CampSite, int, QQueryOperations> idProperty() {
+extension VisitQueryProperty on QueryBuilder<Visit, Visit, QQueryProperty> {
+  QueryBuilder<Visit, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });

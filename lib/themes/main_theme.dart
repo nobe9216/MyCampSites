@@ -13,6 +13,9 @@ class MainTheme extends StatelessWidget {
   final ThemeData? data;
   final ThemeData? darkData;
 
+  static MainThemeData of(BuildContext context) =>
+      MainThemeData(brightness: Theme.of(context).brightness);
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -28,12 +31,27 @@ class MainTheme extends StatelessWidget {
 
 @immutable
 class MainThemeData {
-  const MainThemeData._();
+  factory MainThemeData({
+    required Brightness brightness,
+  }) {
+    return MainThemeData._(
+      brightness: brightness,
+      commonTextColor: Colors.black,
+    );
+  }
+  const MainThemeData._({
+    required this.brightness,
+    required this.commonTextColor,
+  });
+
+  final Brightness brightness;
+  final Color commonTextColor;
 
   static ThemeData light() {
     final base = ThemeData();
     const primaryColor = Colors.green;
     const onPrimaryColor = Colors.white;
+    const commonBackgroundColor = Colors.white;
 
     return base.copyWith(
       colorScheme: base.colorScheme.copyWith(
@@ -52,7 +70,13 @@ class MainThemeData {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
-        color: Colors.white,
+        color: commonBackgroundColor,
+      ),
+      dialogTheme: base.dialogTheme.copyWith(
+        backgroundColor: commonBackgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
       ),
     );
   }
