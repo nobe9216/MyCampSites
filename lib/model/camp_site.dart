@@ -5,7 +5,7 @@ part 'camp_site.g.dart';
 part 'camp_site.freezed.dart';
 
 @freezed
-@collection
+@Collection(ignore: {'copyWith'})
 class CampSite with ModelBase, _$CampSite {
   factory CampSite({
     @Default('') String name,

@@ -16,7 +16,7 @@ part 'visit.freezed.dart';
 // TODO(y.yamanobe memo): 名前付きコンストラクタで、最初から値を詰めてインスタンス化してくれるコンストラクタを作れば、編集時などのインスタンス化に便利
 // 名前付きコンストラクタは必要な時に
 @freezed
-@collection
+@Collection(ignore: {'copyWith'})
 class Visit with ModelBase, _$Visit {
   factory Visit({
     DateTime? visitedDate,

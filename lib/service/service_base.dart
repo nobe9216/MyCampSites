@@ -14,10 +14,12 @@ abstract class ServiceBase<T extends ModelBase> {
   IsarCollection<T> get collection;
 
   Future<T> createOrUpdate(T data) async {
+    log('data.id: ${data.id}');
     await isar.writeTxn(() async {
-      final date = DateTime.now();
-      data.createdAt = date;
-      data.updatedAt = date;
+      // TODO(y.yamanobe memo): 別の方法で登録
+      // final date = DateTime.now();
+      // data.createdAt = date;
+      // data.updatedAt = date;
       await collection.put(data);
     });
     return data;
@@ -26,7 +28,7 @@ abstract class ServiceBase<T extends ModelBase> {
   Future<T?> delete(int id) async {
     log('id: $id');
     await isar.writeTxn(() async {
-      await collection.delete(id);
+      await collection.delete(14);
     });
     return collection.get(id);
   }

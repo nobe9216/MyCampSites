@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:input_form_controller/input_form_controller.dart';
@@ -38,9 +40,12 @@ class CampSiteForm extends StatelessWidget {
                 return null;
               },
               onSaved: (newValue) => inputFormController.update(
-                (currentValue) => currentValue.copyWith(
-                  name: newValue ?? '',
-                ),
+                (currentValue) {
+                  log('newValue name: $newValue');
+                  return currentValue.copyWith(
+                    name: newValue ?? '',
+                  );
+                },
               ),
             ),
             gap,
