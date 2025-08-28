@@ -1,13 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:isar/isar.dart';
-import 'package:my_camp_sites/model/model_base.dart';
+import 'package:my_camp_sites/model/camp_site_base.dart';
 part 'camp_site.g.dart';
 part 'camp_site.freezed.dart';
 
 @freezed
-@Collection(ignore: {'copyWith'})
-class CampSite with ModelBase, _$CampSite {
+@collection
+class CampSite with CampSiteBase, _$CampSite {
   factory CampSite({
+    Id? id,
     @Default('') String name,
     @Default('') String prefectureName,
     @Default('') String address,

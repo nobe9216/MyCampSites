@@ -83,7 +83,7 @@ class VisitForm extends HookConsumerWidget {
                   child: _FormFieldWithPrefixAndSuffix(
                     prefix: '滞在',
                     suffix: '日',
-                    fieldWidth: 60,
+                    fieldWidth: 50,
                     readOnly: readOnly,
                     counterText: '',
                     initialValue: initialValue.lengthOfStay.toString(),
@@ -535,7 +535,7 @@ class VisitedCampSiteSelectDialog extends HookConsumerWidget {
                     onTap: () {
                       inputFormController.update(
                         (currentValue) => currentValue.copyWith(
-                          campSiteId: campSite.id,
+                          campSiteId: campSite.id!,
                         ),
                       );
                       ref.read(_selectedCampSiteProvider.notifier).state =

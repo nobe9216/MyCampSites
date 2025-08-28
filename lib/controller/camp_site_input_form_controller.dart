@@ -15,12 +15,14 @@ final campSiteInputFormProvider = StateNotifierProvider.autoDispose<
     initialValue: CampSite(),
     onSubmit: (value) async {
       final campSiteService = await ref.read(campSiteServiceProvider.future);
-      campSiteService.createOrUpdate(value);
+      await (value.id == null
+          ? campSiteService.create
+          : campSiteService.update)(value);
     },
     onDelete: (value) async {
       final isar = await ref.read(isarProvider.future);
       isar.writeTxn(() async {
-        await isar.campSites.delete(value.id);
+        await isar.campSites.delete(value.id!);
       });
     },
   ),

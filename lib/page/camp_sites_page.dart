@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:input_form_controller/input_form_controller.dart';
@@ -42,7 +40,6 @@ class CampSitesPage extends HookConsumerWidget {
                   buttonLabel: '追加',
                   onPressed: () async {
                     final navigator = Navigator.of(context);
-                    log('inputFormController name: ${inputFormController.initialValue.name}');
                     await inputFormController.submit();
                     if (campSiteFormKey.currentState!.validate()) {
                       navigator.pop();
@@ -80,7 +77,7 @@ class CampSitesPage extends HookConsumerWidget {
                             content: const Text('削除しますか？'),
                             defaultAction: () async {
                               final service = await campSiteService;
-                              service.delete(campSite.id);
+                              service.delete(campSite.id!);
                               navigator.pop();
                             },
                             cancelAction: () {

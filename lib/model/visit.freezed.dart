@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Visit {
+  int? get id => throw _privateConstructorUsedError;
   DateTime? get visitedDate => throw _privateConstructorUsedError;
   int get campSiteId => throw _privateConstructorUsedError;
   int get accommodationFee => throw _privateConstructorUsedError;
@@ -37,7 +38,8 @@ abstract class $VisitCopyWith<$Res> {
       _$VisitCopyWithImpl<$Res, Visit>;
   @useResult
   $Res call(
-      {DateTime? visitedDate,
+      {int? id,
+      DateTime? visitedDate,
       int campSiteId,
       int accommodationFee,
       int transportationFee,
@@ -64,6 +66,7 @@ class _$VisitCopyWithImpl<$Res, $Val extends Visit>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? visitedDate = freezed,
     Object? campSiteId = null,
     Object? accommodationFee = null,
@@ -76,6 +79,10 @@ class _$VisitCopyWithImpl<$Res, $Val extends Visit>
     Object? evaluations = null,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       visitedDate: freezed == visitedDate
           ? _value.visitedDate
           : visitedDate // ignore: cast_nullable_to_non_nullable
@@ -136,7 +143,8 @@ abstract class _$$VisitImplCopyWith<$Res> implements $VisitCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {DateTime? visitedDate,
+      {int? id,
+      DateTime? visitedDate,
       int campSiteId,
       int accommodationFee,
       int transportationFee,
@@ -162,6 +170,7 @@ class __$$VisitImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? visitedDate = freezed,
     Object? campSiteId = null,
     Object? accommodationFee = null,
@@ -174,6 +183,10 @@ class __$$VisitImplCopyWithImpl<$Res>
     Object? evaluations = null,
   }) {
     return _then(_$VisitImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       visitedDate: freezed == visitedDate
           ? _value.visitedDate
           : visitedDate // ignore: cast_nullable_to_non_nullable
@@ -222,7 +235,8 @@ class __$$VisitImplCopyWithImpl<$Res>
 
 class _$VisitImpl extends _Visit {
   _$VisitImpl(
-      {this.visitedDate,
+      {this.id,
+      this.visitedDate,
       this.campSiteId = -1,
       this.accommodationFee = 0,
       this.transportationFee = 0,
@@ -234,6 +248,8 @@ class _$VisitImpl extends _Visit {
       this.evaluations = const Evaluation()})
       : super._();
 
+  @override
+  final int? id;
   @override
   final DateTime? visitedDate;
   @override
@@ -266,7 +282,7 @@ class _$VisitImpl extends _Visit {
 
   @override
   String toString() {
-    return 'Visit(visitedDate: $visitedDate, campSiteId: $campSiteId, accommodationFee: $accommodationFee, transportationFee: $transportationFee, foodCosts: $foodCosts, incidentalExpenses: $incidentalExpenses, weather: $weather, lengthOfStay: $lengthOfStay, impressions: $impressions, evaluations: $evaluations)';
+    return 'Visit(id: $id, visitedDate: $visitedDate, campSiteId: $campSiteId, accommodationFee: $accommodationFee, transportationFee: $transportationFee, foodCosts: $foodCosts, incidentalExpenses: $incidentalExpenses, weather: $weather, lengthOfStay: $lengthOfStay, impressions: $impressions, evaluations: $evaluations)';
   }
 
   @override
@@ -274,6 +290,7 @@ class _$VisitImpl extends _Visit {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VisitImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.visitedDate, visitedDate) ||
                 other.visitedDate == visitedDate) &&
             (identical(other.campSiteId, campSiteId) ||
@@ -298,6 +315,7 @@ class _$VisitImpl extends _Visit {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      id,
       visitedDate,
       campSiteId,
       accommodationFee,
@@ -318,7 +336,8 @@ class _$VisitImpl extends _Visit {
 
 abstract class _Visit extends Visit {
   factory _Visit(
-      {final DateTime? visitedDate,
+      {final int? id,
+      final DateTime? visitedDate,
       final int campSiteId,
       final int accommodationFee,
       final int transportationFee,
@@ -330,6 +349,8 @@ abstract class _Visit extends Visit {
       final Evaluation evaluations}) = _$VisitImpl;
   _Visit._() : super._();
 
+  @override
+  int? get id;
   @override
   DateTime? get visitedDate;
   @override

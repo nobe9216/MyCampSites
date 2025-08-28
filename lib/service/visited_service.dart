@@ -31,4 +31,12 @@ class VisitService extends ServiceBase<Visit> {
       }
     }
   }
+
+  @override
+  Visit autoIncrementId(Visit data) {
+    return data.copyWith(
+      id: Isar.autoIncrement,
+      impressions: data.impressions,
+    );
+  }
 }

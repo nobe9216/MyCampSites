@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:isar/isar.dart';
-import 'package:my_camp_sites/model/model_base.dart';
 import 'package:my_camp_sites/model/evaluation.dart';
+import 'package:my_camp_sites/model/visit_base.dart';
 part 'visit.g.dart';
 part 'visit.freezed.dart';
 
@@ -16,9 +16,10 @@ part 'visit.freezed.dart';
 // TODO(y.yamanobe memo): 名前付きコンストラクタで、最初から値を詰めてインスタンス化してくれるコンストラクタを作れば、編集時などのインスタンス化に便利
 // 名前付きコンストラクタは必要な時に
 @freezed
-@Collection(ignore: {'copyWith'})
-class Visit with ModelBase, _$Visit {
+@collection
+class Visit with VisitBase, _$Visit {
   factory Visit({
+    Id? id,
     DateTime? visitedDate,
     @Default(-1) int campSiteId,
     @Default(0) int accommodationFee,

@@ -32,4 +32,11 @@ class CampSiteService extends ServiceBase<CampSite> {
       }
     }
   }
+
+  @override
+  CampSite autoIncrementId(CampSite data) {
+    return data.copyWith(
+      id: Isar.autoIncrement,
+    );
+  }
 }

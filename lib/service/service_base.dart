@@ -1,10 +1,9 @@
 import 'dart:developer';
 
 import 'package:isar/isar.dart';
-import 'package:my_camp_sites/model/model_base.dart';
 
 // TODO(y.yamanobe): メモ　readの機能もモデル別じゃなく、ここで共通化できるかも
-abstract class ServiceBase<T extends ModelBase> {
+abstract class ServiceBase<T> {
   ServiceBase({
     required this.isar,
   });
@@ -13,13 +12,21 @@ abstract class ServiceBase<T extends ModelBase> {
 
   IsarCollection<T> get collection;
 
-  Future<T> createOrUpdate(T data) async {
-    log('data.id: ${data.id}');
+  T autoIncrementId(T data);
+
+// TODO(y.yamanobe): さらに共通化可能
+// オプショナルのidが渡せるメソッドで共通処理を実装すればいい
+  Future<T> create(T data) async {
     await isar.writeTxn(() async {
-      // TODO(y.yamanobe memo): 別の方法で登録
-      // final date = DateTime.now();
-      // data.createdAt = date;
-      // data.updatedAt = date;
+      // TODO(y.yamanobe memo): linterを確認
+      final data0 = autoIncrementId(data);
+      await collection.put(data0);
+    });
+    return data;
+  }
+
+  Future<T> update(T data) async {
+    await isar.writeTxn(() async {
       await collection.put(data);
     });
     return data;
@@ -28,7 +35,7 @@ abstract class ServiceBase<T extends ModelBase> {
   Future<T?> delete(int id) async {
     log('id: $id');
     await isar.writeTxn(() async {
-      await collection.delete(14);
+      await collection.delete(id);
     });
     return collection.get(id);
   }

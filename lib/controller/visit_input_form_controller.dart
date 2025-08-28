@@ -14,12 +14,14 @@ final visitInputFormProvider = StateNotifierProvider.autoDispose<
     initialValue: Visit(),
     onSubmit: (value) async {
       final visitService = await ref.read(visitServiceProvider.future);
-      visitService.createOrUpdate(value);
+      await (value.id == null
+          ? visitService.create
+          : visitService.update)(value);
     },
     onDelete: (value) async {
       final isar = await ref.read(isarProvider.future);
       isar.writeTxn(() async {
-        await isar.visits.delete(value.id);
+        await isar.visits.delete(value.id!);
       });
     },
   ),

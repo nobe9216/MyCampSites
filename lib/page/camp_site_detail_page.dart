@@ -111,7 +111,7 @@ class _DeleteButton extends HookConsumerWidget {
             content: const Text('削除しますか？'),
             defaultAction: () async {
               final service = await campSiteService;
-              service.delete(campSite.id);
+              service.delete(campSite.id!);
               navigator.pop();
               navigator.pop();
             },

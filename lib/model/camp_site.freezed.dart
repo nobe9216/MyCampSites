@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CampSite {
+  int? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get prefectureName => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
@@ -37,7 +38,8 @@ abstract class $CampSiteCopyWith<$Res> {
       _$CampSiteCopyWithImpl<$Res, CampSite>;
   @useResult
   $Res call(
-      {String name,
+      {int? id,
+      String name,
       String prefectureName,
       String address,
       String phoneNumber,
@@ -61,6 +63,7 @@ class _$CampSiteCopyWithImpl<$Res, $Val extends CampSite>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? name = null,
     Object? prefectureName = null,
     Object? address = null,
@@ -72,6 +75,10 @@ class _$CampSiteCopyWithImpl<$Res, $Val extends CampSite>
     Object? checkoutTime = null,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -121,7 +128,8 @@ abstract class _$$CampSiteImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String name,
+      {int? id,
+      String name,
       String prefectureName,
       String address,
       String phoneNumber,
@@ -143,6 +151,7 @@ class __$$CampSiteImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? name = null,
     Object? prefectureName = null,
     Object? address = null,
@@ -154,6 +163,10 @@ class __$$CampSiteImplCopyWithImpl<$Res>
     Object? checkoutTime = null,
   }) {
     return _then(_$CampSiteImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -198,7 +211,8 @@ class __$$CampSiteImplCopyWithImpl<$Res>
 
 class _$CampSiteImpl extends _CampSite {
   _$CampSiteImpl(
-      {this.name = '',
+      {this.id,
+      this.name = '',
       this.prefectureName = '',
       this.address = '',
       this.phoneNumber = '',
@@ -209,6 +223,8 @@ class _$CampSiteImpl extends _CampSite {
       this.checkoutTime = ''})
       : super._();
 
+  @override
+  final int? id;
   @override
   @JsonKey()
   final String name;
@@ -237,7 +253,7 @@ class _$CampSiteImpl extends _CampSite {
 
   @override
   String toString() {
-    return 'CampSite(name: $name, prefectureName: $prefectureName, address: $address, phoneNumber: $phoneNumber, memo: $memo, powerAvailable: $powerAvailable, haveRadioWave: $haveRadioWave, offTime: $offTime, checkoutTime: $checkoutTime)';
+    return 'CampSite(id: $id, name: $name, prefectureName: $prefectureName, address: $address, phoneNumber: $phoneNumber, memo: $memo, powerAvailable: $powerAvailable, haveRadioWave: $haveRadioWave, offTime: $offTime, checkoutTime: $checkoutTime)';
   }
 
   @override
@@ -245,6 +261,7 @@ class _$CampSiteImpl extends _CampSite {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CampSiteImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.prefectureName, prefectureName) ||
                 other.prefectureName == prefectureName) &&
@@ -262,8 +279,18 @@ class _$CampSiteImpl extends _CampSite {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, prefectureName, address,
-      phoneNumber, memo, powerAvailable, haveRadioWave, offTime, checkoutTime);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      prefectureName,
+      address,
+      phoneNumber,
+      memo,
+      powerAvailable,
+      haveRadioWave,
+      offTime,
+      checkoutTime);
 
   @JsonKey(ignore: true)
   @override
@@ -274,7 +301,8 @@ class _$CampSiteImpl extends _CampSite {
 
 abstract class _CampSite extends CampSite {
   factory _CampSite(
-      {final String name,
+      {final int? id,
+      final String name,
       final String prefectureName,
       final String address,
       final String phoneNumber,
@@ -285,6 +313,8 @@ abstract class _CampSite extends CampSite {
       final String checkoutTime}) = _$CampSiteImpl;
   _CampSite._() : super._();
 
+  @override
+  int? get id;
   @override
   String get name;
   @override
