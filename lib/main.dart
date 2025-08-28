@@ -2,10 +2,11 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
-import 'package:my_camp_sites/page/camp_sites_page.dart';
-import 'package:my_camp_sites/page/visits_page.dart';
-import 'package:my_camp_sites/providers/isar_provider.dart';
-import 'package:my_camp_sites/themes/main_theme.dart';
+import 'package:my_camp_sites/page_old/camp_sites_page.dart';
+import 'package:my_camp_sites/page_old/visits_page.dart';
+import 'package:my_camp_sites/providers_old/isar_provider.dart';
+import 'package:my_camp_sites/strings.dart';
+import 'package:my_camp_sites/themes_old/main_theme.dart';
 
 final logger = Logger(
   printer: PrettyPrinter(
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Camp Sites',
+      title: Strings.myCampSites,
       theme: FlexThemeData.light(
         scheme: FlexScheme.green,
       ),
@@ -66,7 +67,7 @@ class _TopPageState extends ConsumerState<TopPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Camp Sites'),
+        title: const Text(Strings.myCampSites),
       ),
       body: Center(
         child: Column(
@@ -82,7 +83,7 @@ class _TopPageState extends ConsumerState<TopPage> {
                   ),
                 );
               },
-              child: const Text('キャンプ場一覧'),
+              child: const Text('${Strings.campSite}${Strings.list}'),
             ),
             const SizedBox(
               height: 20,
@@ -97,7 +98,7 @@ class _TopPageState extends ConsumerState<TopPage> {
                   ),
                 );
               },
-              child: const Text('訪問実績一覧'),
+              child: const Text('${Strings.visited}${Strings.list}'),
             ),
           ],
         ),
